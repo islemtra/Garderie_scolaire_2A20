@@ -40,11 +40,13 @@ garderiew::garderiew(QWidget *parent) :
     //////////////////Controle de saisie (eleve)//////////////
     QRegExp rx("[A-Z][a-zA-Z]*"); //une expression régulière (RegExp) qui contient uniquement des lettres et commence par une majuscule
     QRegExp rx2("(Homme|Femme)"); //vérifie si la chaîne est soit "Homme" soit "Femme", tout en commençant par une majuscule
+QRegExp rx3("[A-Z][a-zA-Z0-9]*");
 
     QValidator *validator = new QRegExpValidator(rx, this);
     QValidator *validator2 = new QRegExpValidator(rx2, this);
+    QValidator *validator3 = new QRegExpValidator(rx3, this);
 
-    ui->id_eleve->setValidator(validator);
+    ui->id_eleve->setValidator(validator3);
      ui->nom_eleve->setValidator(validator);
       ui->prenom_eleve->setValidator(validator);
         ui->sexe_eleve->setValidator(validator2);
@@ -54,9 +56,24 @@ garderiew::garderiew(QWidget *parent) :
           ui->prenom_eleve_2->setValidator(validator);
             ui->sexe_eleve_2->setValidator(validator2);
 
+/////////////////////////Controle de saisies (enseignant)///////////////
+                 ui->id_enseignant->setValidator(validator3);
+            ui->nom_enseignant_3->setValidator(validator);
+            ui->prenom_enseignant_3->setValidator(validator);
+           ui->matiere_enseignant_3->setValidator(validator);
+            ui->sexe_enseingnant_2->setValidator(validator2);
+         //  ui->remarque_enseignant_3->setValidator(validator);
+             ui->nombre_enseignant_3->setValidator(new QIntValidator(0, 9999999, this));
 
+             ui->id_enseignant_3->setValidator(validator3);
+             ui->nom_enseignant->setValidator(validator);
+             ui->prenom_enseignant->setValidator(validator);
+            ui->matiere_enseignant->setValidator(validator);
+             ui->sexe_enseingnant->setValidator(validator2);
+           // ui->remarque_enseignant->setValidator(validator);
+              ui->nombre_enseignant->setValidator(new QIntValidator(0, 9999999, this));
     /////////////Affichage/////////////////////
-
+ ui->tab_enseignant->setModel(EN1.afficher());
   ui->tab_eleves->setModel(EL1.afficher());
     ////////////son//////////////////////////
     son=new QSound(":/sons/sons/not.wav");
@@ -451,4 +468,245 @@ void garderiew::on_pb_modifier_clicked()
                                           "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
+}
+////////////////////////////////////////////
+///////////////////////////enseignant////////////
+/// /////////////////////////////////////////
+void garderiew::on_pb_ajouter_ens_clicked()
+{
+    QString Identifiant=ui->id_enseignant->text();
+    QString Nom=ui->nom_enseignant->text();
+    QString Prenom=ui->prenom_enseignant->text();
+    QString Date_naiss=ui->la_date_enseignant->text();
+     QString Matiere=ui->matiere_enseignant->text();
+         int Nb_Classe=ui->nombre_enseignant->text().toInt();
+    QString Remarque=ui->remarque_enseignant->text();
+    QString Sexe=ui->sexe_enseingnant->text();
+
+    enseignant EN1(Identifiant,Nom,Prenom,Date_naiss,Matiere,Nb_Classe,Remarque,Sexe);
+    bool test=EN1.ajouter();
+    QMessageBox msgBox;
+    if(test)
+    { msgBox.setText("ajout avec success !");
+        ui->tab_enseignant->setModel(EN1.afficher());
+        son1->play();
+
+    }
+    else
+        msgBox.setText("ajout echoué !");
+    msgBox.exec();
+}
+
+void garderiew::on_reset_ajouter_ens_2_clicked()
+{
+ui->id_enseignant->clear();
+ui->nom_enseignant->clear();
+ui->prenom_enseignant->clear();
+ui->la_date_enseignant->clear();
+ui->matiere_enseignant->clear();
+ui->nombre_enseignant->clear();
+ui->remarque_enseignant->clear();
+ui->sexe_enseingnant->clear();
+}
+
+void garderiew::on_cherche_aff_enseignant_par_matiere_clicked()
+{
+    enseignant EN1;
+    EN1=EN1.chercher(ui->chercher_aff_enseignant->text());
+
+
+        if(EN1.getIdentifiant()!=""){
+    QString input = ui->chercher_aff_enseignant->text();
+
+
+        ui->tab_enseignant->setModel(EN1.afficher_enseignant2(input));
+        son3->play();
+        }
+        else //introuvable
+        {
+            QMessageBox::critical(nullptr, QObject::tr("chercher un enseignant"),
+                                  QObject::tr("enseignant introuvable !.\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+}
+}
+
+void garderiew::on_tri_nom_2_clicked()
+{
+ ui->tab_enseignant->setModel(EN1.tri_nom());
+}
+
+void garderiew::on_tri_prenom_2_clicked()
+{
+ ui->tab_enseignant->setModel(EN1.tri_prenom());
+}
+
+void garderiew::on_tri_date_naiss_ens_clicked()
+{
+ ui->tab_enseignant->setModel(EN1.tri_date_naiss());
+}
+
+void garderiew::on_tri_croissant_nb_clicked()
+{
+ ui->tab_enseignant->setModel(EN1.tri_croissant());
+}
+
+void garderiew::on_tri_decroissant_nb_clicked()
+{
+ ui->tab_enseignant->setModel(EN1.tri_decroissant());
+}
+
+void garderiew::on_export_but_enseignant_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Excel file"), qApp->applicationDirPath (),
+                                                            tr("Excel Files (*.xls)"));
+            if (fileName.isEmpty())
+                return;
+
+            exportExcel obj(fileName, "mydata", ui->tab_enseignant);
+
+            //colums to export
+            obj.addField(0, "Identifiant", "char(20)");
+            obj.addField(1, "Nom", "char(20)");
+            obj.addField(2, "Prenom", "char(20)");
+             obj.addField(3, "Date_Naiss", "char(20)");
+            obj.addField(4, "Matiere", "char(20)");
+            obj.addField(5, "Nb_Classe", "char(20)");
+            obj.addField(6, "Remarque", "char(20)");
+           obj.addField(7, "Sexe", "char(20)");
+
+
+            int retVal = obj.export2Excel();
+            if( retVal > 0)
+            {
+                QMessageBox::information(this, tr("Done"),
+                                         QString(tr("%1 records exported!")).arg(retVal)
+                                         );
+            }
+}
+
+void garderiew::on_stat_enseignant_clicked()
+{// Assumez que vous avez déjà une instance de QSqlDatabase nommée "db" configurée et ouverte.
+
+    // Créez une instance de QSqlQueryModel pour exécuter des requêtes.
+    QSqlQueryModel *model = new QSqlQueryModel();
+
+    // Exécutez la requête pour obtenir les statistiques par matière.
+    model->setQuery("SELECT Matiere, COUNT(*) as Count FROM eleve GROUP BY Matiere");
+
+    QPieSeries *series = new QPieSeries();
+      int total=0;
+       for (int row = 0; row < model->rowCount(); ++row) {
+        total+=model->data(model->index(row, 1)).toInt();
+       }
+
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QString matiere = model->data(model->index(row, 0)).toString();
+        int count = model->data(model->index(row, 1)).toInt();
+
+        QString label = QString("%1 . %2%").arg(matiere).arg(QString::number((count * 100) / total, 'f', 2));
+        series->append(label, count);
+    }
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Statistiques par matière");
+    chart->legend()->hide();
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(1000, 500);
+    chartView->show();
+
+
+}
+
+void garderiew::on_pb_supprimer_enseignant_clicked()
+{
+    enseignant EN1;
+    EN1.setIdentifiant(ui->le_num_supp__enseignant->text());
+    bool test=EN1.supprimer(EN1.getIdentifiant());
+    QMessageBox msgBox;
+    if(test)
+       { msgBox.setText("suppression réussie !");
+    ui->tab_enseignant->setModel(EN1.afficher());
+    son->play();
+
+
+    }
+    else
+    msgBox.setText("suppression echouée !");
+    msgBox.exec();
+}
+
+void garderiew::on_pb_chercher_enseignant_clicked()
+{
+    enseignant EN1;
+    EN1=EN1.chercher2(ui->la_recherche_enseignant->text());
+
+    if(EN1.getIdentifiant()!="")
+    {
+
+        ui->id_enseignant_3->setText(EN1.getIdentifiant()) ;
+        ui->nom_enseignant_3->setText(EN1.getNom()) ;
+        ui->prenom_enseignant_3->setText (EN1.getPrenom()) ;
+       // ui->la_date_eleve_2->setText(EL1.getDat_naiss());
+        ui->matiere_enseignant_3 ->setText(EN1.getMatiere());
+        ui->sexe_enseingnant_2->setText(EN1.getSexe());
+        ui->remarque_enseignant_3->setText(EN1.getRemarque());
+         ui->nombre_enseignant_3->setText(QString::number(EN1.getNb_Classe()));
+        ui->tab_enseignant->setModel(EN1.afficher());
+    }
+    else //introuvable
+    {
+        QMessageBox::critical(nullptr, QObject::tr("chercher un enseignant"),
+                              QObject::tr("eleve introuvable !.\n"
+                                          "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+}
+
+void garderiew::on_pb_modifie_enseignant_clicked()
+{
+    QString Identifiant=ui->id_enseignant_3->text();
+    QString Nom=ui->nom_enseignant_3->text();
+    QString Prenom=ui->prenom_enseignant_3->text();
+    QString Date_naiss=ui->la_date_enseignant->text();
+     QString Matiere=ui->matiere_enseignant_3->text();
+         int Nb_Classe=ui->nombre_enseignant_3->text().toInt();
+    QString Remarque=ui->remarque_enseignant_3->text();
+    QString Sexe=ui->sexe_enseingnant_2->text();
+
+    enseignant(Identifiant,Nom,Prenom,Date_naiss,Matiere,Nb_Classe,Remarque,Sexe);
+
+    enseignant EN1;
+    int test=EN1.Existence_enseignant(Identifiant);
+
+    if(test==true)
+    {int test1=EN1.modifier(Identifiant,Nom,Prenom,Date_naiss,Matiere,Nb_Classe,Remarque,Sexe);
+        if(test1==true){
+            QMessageBox::information(nullptr, QObject::tr("modifier un enseignant"),
+                                     QObject::tr("enseignant modifié.\n"
+                                                 "Click Cancel to exit."), QMessageBox::Cancel);
+            ui->tab_enseignant->setModel(EN1.afficher());
+            son2->play();
+
+        }
+        else
+        {
+            QMessageBox::critical(nullptr, QObject::tr("modifier un enseignant"),
+                                  QObject::tr("Erreur de modification!.\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+
+        }
+
+    }
+
+    else
+    {
+        QMessageBox::critical(nullptr, QObject::tr("modifier un enseignant"),
+                              QObject::tr("Erreur !.\n"
+                                          "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+   //  ui->tab_enseignant->setModel(EN1.afficher());
 }

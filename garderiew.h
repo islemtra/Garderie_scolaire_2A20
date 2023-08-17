@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include"eleve.h"
+#include"enseignant.h"
 
 #include <QSound>
 #include <QtWidgets/QApplication>
@@ -99,11 +100,38 @@ private slots:
     void on_pb_chercher_mod_clicked();
 
 
+    void on_pb_ajouter_ens_clicked();
+
+    void on_reset_ajouter_ens_2_clicked();
+
+    void on_cherche_aff_enseignant_par_matiere_clicked();
+
+    void on_tri_nom_2_clicked();
+
+    void on_tri_prenom_2_clicked();
+
+    void on_tri_date_naiss_ens_clicked();
+
+    void on_tri_croissant_nb_clicked();
+
+    void on_tri_decroissant_nb_clicked();
+
+    void on_export_but_enseignant_clicked();
+
+    void on_stat_enseignant_clicked();
+
+    void on_pb_supprimer_enseignant_clicked();
+
+    void on_pb_chercher_enseignant_clicked();
+
+    void on_pb_modifie_enseignant_clicked();
+
 private:
     Ui::garderiew *ui;
 
 
     eleve EL1;
+    enseignant EN1;
      QTimer *timer;
      QSound *son;
      QSound *son1;
