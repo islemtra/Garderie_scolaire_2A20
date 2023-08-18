@@ -35,34 +35,50 @@
   <widget class="QTabWidget" name="tab_widget">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>50</y>
+     <x>50</x>
+     <y>30</y>
      <width>1171</width>
      <height>661</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget{background:transparent} QTabWidget::pane{border: 1px;border-color:red;background-color: transparent;} 
-QTabBar::tab {background-color: transparent;color: #ccc;width: 280px;height:48px;font-size:15px} 
+    <string notr="true">/* Apply a transparent background to the entire widget */
+QWidget {
+    background: transparent;
+}
 
-QTabBar::tab:hover{
-color: white;
-background-color:#00FF00;
-border-width: 2px;
-border-color: #000000;;
-border-style: solid;
-border-radius: 7;
-padding: 3px;
-font-size: 20px;
+/* Customize the appearance of the tab widget pane */
+QTabWidget::pane {
+    border: 3px solid green;
+    background-color: transparent;
+}
 
+/* Customize the appearance of the individual tabs */
+QTabBar::tab {
+    background-color: transparent;
+    color: #ccc;
+    width: 140px;
+    height: 24px;
+    font-size: 15px;
+    padding: 10px 20px; /* Added padding for better readability and spacing */
+}
 
-}</string>
+/* Customize the appearance of tabs on hover */
+QTabBar::tab:hover {
+    color: white;
+    background-color: #00FF00;
+    border: 2px solid #000000;
+    border-radius: 7px;
+    padding: 3px;
+    font-size: 20px;
+}
+</string>
    </property>
    <property name="tabShape">
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -71,9 +87,9 @@ font-size: 20px;
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>0</y>
-       <width>1141</width>
+       <width>1151</width>
        <height>601</height>
       </rect>
      </property>
@@ -83,27 +99,43 @@ font-size: 20px;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget{background:transparent} QTabWidget::pane{border: 1px;border-color:green;background-color: transparent;} 
-QTabBar::tab {background-color: transparent;color: #ccc;width: 280px;height:48px;font-size:15px} 
+      <string notr="true">/* Set the transparent background for the entire widget */
+QWidget {
+    background: transparent;
+}
 
-QTabBar::tab:hover{
-color: white;
-background-color:#00FF00;
-border-width: 2px;
-border-color: #000000;;
-border-style: solid;
-border-radius: 7;
-padding: 3px;
-font-size: 20px;
+/* Customize the appearance of the tab widget pane */
+QTabWidget::pane {
+    border: 5px solid green;
+    background-color: transparent;
+}
 
+/* Customize the appearance of the individual tabs */
+QTabBar::tab {
+    background-color: transparent;
+    color: #ccc;
+    width: 200px;
+    height: 24px;
+    font-size: 15px;
+    padding: 10px 20px; /* Added padding for better readability and spacing */
+}
 
-}</string>
+/* Customize the appearance of tabs on hover */
+QTabBar::tab:hover {
+    color: white;
+    background-color: #00FF00;
+    border: 2px solid #000000;
+    border-radius: 7px;
+    padding: 3px;
+    font-size: 20px;
+}
+</string>
      </property>
      <property name="tabShape">
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <property name="iconSize">
       <size>
@@ -2747,9 +2779,9 @@ QLineEdit:focus
       <widget class="QTableView" name="tab_eleves">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>10</x>
          <y>30</y>
-         <width>771</width>
+         <width>791</width>
          <height>471</height>
         </rect>
        </property>
@@ -2833,7 +2865,7 @@ QPushButton:focus
         <rect>
          <x>810</x>
          <y>380</y>
-         <width>331</width>
+         <width>321</width>
          <height>31</height>
         </rect>
        </property>
@@ -2856,16 +2888,16 @@ QPushButton:focus
 }</string>
        </property>
        <property name="text">
-        <string>Trier par ordre croissant de date de naissance </string>
+        <string>Trier par ordre croissant de date_de_naissance </string>
        </property>
       </widget>
       <widget class="QPushButton" name="tri_decroissant">
        <property name="geometry">
         <rect>
-         <x>810</x>
+         <x>800</x>
          <y>430</y>
          <width>331</width>
-         <height>28</height>
+         <height>29</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -7211,7 +7243,7 @@ QLineEdit:focus
        <widget class="QDateEdit" name="la_date_eleve_2">
         <property name="geometry">
          <rect>
-          <x>620</x>
+          <x>610</x>
           <y>260</y>
           <width>221</width>
           <height>22</height>
@@ -7256,7 +7288,7 @@ QLineEdit:focus
        <widget class="QLineEdit" name="sexe_eleve_2">
         <property name="geometry">
          <rect>
-          <x>560</x>
+          <x>610</x>
           <y>310</y>
           <width>221</width>
           <height>31</height>
@@ -8054,27 +8086,43 @@ QLineEdit:focus
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget{background:transparent} QTabWidget::pane{border: 1px;border-color:red;background-color: transparent;} 
-QTabBar::tab {background-color: transparent;color: #ccc;width: 280px;height:48px;font-size:15px} 
+      <string notr="true">/* Set the transparent background for the entire widget */
+QWidget {
+    background: transparent;
+}
 
-QTabBar::tab:hover{
-color: white;
-background-color:#00FF00;
-border-width: 2px;
-border-color: #000000;;
-border-style: solid;
-border-radius: 7;
-padding: 3px;
-font-size: 20px;
+/* Customize the appearance of the tab widget pane */
+QTabWidget::pane {
+    border: 5px solid green;
+    background-color: transparent;
+}
 
+/* Customize the appearance of the individual tabs */
+QTabBar::tab {
+    background-color: transparent;
+    color: #ccc;
+    width: 200px;
+    height: 24px;
+    font-size: 15px;
+    padding: 10px 20px; /* Added padding for better readability and spacing */
+}
 
-}</string>
+/* Customize the appearance of tabs on hover */
+QTabBar::tab:hover {
+    color: white;
+    background-color: #00FF00;
+    border: 2px solid #000000;
+    border-radius: 7px;
+    padding: 3px;
+    font-size: 20px;
+}
+</string>
      </property>
      <property name="tabShape">
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -11468,38 +11516,38 @@ QLineEdit:focus
       <widget class="QTableView" name="tab_enseignant">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>10</x>
          <y>30</y>
-         <width>771</width>
+         <width>791</width>
          <height>471</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QTableView
-{
+        <string notr="true">/* Styling for QTableView */
+QTableView {
     alternate-background-color: #1F1F1F;
     gridline-color: white;
     color: white;
-	
-	font: 75 9pt &quot;MS Shell Dlg 2&quot;;
-}
-QTableView::item 
-{   
-    color: white;        
+    font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 }
 
-QTableView::item:focus
-{   
+QTableView::item {
+    color: white;
+}
+
+QTableView::item:focus {
     color: gray;
-    background: #0063cd;            
-}        
-QTableView::item:selected
-{   
-    color: red;
-    background: #0063cd;            
+    background: #0063cd;
 }
 
-QCheckBox::indicator:checked, QCheckBox::indicator:unchecked{
+QTableView::item:selected {
+    color: red;
+    background: #0063cd;
+}
+
+/* Styling for QCheckBox indicator */
+QCheckBox::indicator:checked,
+QCheckBox::indicator:unchecked {
     color: #b1b1b1;
     background-color: #323232;
     border: 1px solid #b1b1b1;
@@ -11509,12 +11557,14 @@ QCheckBox::indicator:checked, QCheckBox::indicator:unchecked{
     margin: 0px 5px 0 5px;
 }
 
-    padding-left:10px;
-    height:100px;
-    width:180px;
+/* Styling for other widgets */
+QCheckBox {
+    padding-left: 10px;
+    height: 100px;
+    width: 180px;
     color: #5a5a5a;
-    border-bottom :1px solid #f0f0f0;
-
+    border-bottom: 1px solid #f0f0f0;
+}
 </string>
        </property>
       </widget>

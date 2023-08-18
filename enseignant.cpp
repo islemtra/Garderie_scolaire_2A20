@@ -105,18 +105,18 @@ QSqlQueryModel* enseignant::afficher()
 }
 
 
-bool enseignant::modifier(QString Identifiant ,QString Nom,QString Prenom,QString Date_naiss,QString Matiere,int Nb_Classe,QString Remarque,QString Sexe){
+bool enseignant::modifier(QString Identifiant, QString Nom, QString Prenom, QString Date_naiss, QString Matiere, int Nb_Classe, QString Remarque, QString Sexe) {
     QSqlQuery query;
-    query.prepare("update enseignant set Identifiant=:Identifiant,Nom=:Nom,Prenom=:Prenom,Date_naiss=:Date_naiss,Matiere=:Matiere,Nb_Classe=:Nb_Classe,Remarque=:Remarque,Sexe=:Sexe where Identifiant=:Identifiant ");
-    query.bindValue(0, Identifiant);
-    query.bindValue(1, Nom);
-    query.bindValue(2, Prenom);
-    query.bindValue(3, Date_naiss);
-    query.bindValue(4, Matiere);
-    query.bindValue(5, Nb_Classe);
-query.bindValue(6, Remarque);
-query.bindValue(7, Sexe);
-    return    query.exec();
+    query.prepare("UPDATE enseignant SET Identifiant=:Identifiant,Nom=:Nom, Prenom=:Prenom, Date_naiss=:Date_naiss, Matiere=:Matiere, Nb_Classe=:Nb_Classe, Remarque=:Remarque, Sexe=:Sexe WHERE Identifiant=:Identifiant");
+    query.bindValue(":Identifiant", Identifiant);
+    query.bindValue(":Nom", Nom);
+    query.bindValue(":Prenom", Prenom);
+    query.bindValue(":Date_naiss", Date_naiss);
+    query.bindValue(":Matiere", Matiere);
+    query.bindValue(":Nb_Classe", Nb_Classe);
+    query.bindValue(":Remarque", Remarque);
+    query.bindValue(":Sexe", Sexe);
+    return query.exec();
 }
 
 bool enseignant:: Existence_enseignant(const QString& Identifiant) const

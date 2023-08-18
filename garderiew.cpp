@@ -585,39 +585,52 @@ void garderiew::on_export_but_enseignant_clicked()
 }
 
 void garderiew::on_stat_enseignant_clicked()
-{// Assumez que vous avez déjà une instance de QSqlDatabase nommée "db" configurée et ouverte.
-
-    // Créez une instance de QSqlQueryModel pour exécuter des requêtes.
-    QSqlQueryModel *model = new QSqlQueryModel();
-
-    // Exécutez la requête pour obtenir les statistiques par matière.
-    model->setQuery("SELECT Matiere, COUNT(*) as Count FROM eleve GROUP BY Matiere");
-
+{QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select * from enseignant where Nb_Classe < 5 ");
+    float Pour1=model->rowCount();
+    model->setQuery("select * from enseignant where Nb_Classe  between 5 and 10 ");
+    float Pour2=model->rowCount();
+    model->setQuery("select * from enseignant where Nb_Classe >10 ");
+    float Pour3=model->rowCount();
+    float total=Pour1+Pour2+Pour3;
+    QString a=QString("moins de 5 classes : "+QString::number((Pour1*100)/total,'f',2)+"%" );
+    QString b=QString("entre 5 dt et 10 classes :"+QString::number((Pour2*100)/total,'f',2)+"%" );
+    QString c=QString("+ 10 classes : "+QString::number((Pour3*100)/total,'f',2)+"%" );
     QPieSeries *series = new QPieSeries();
-      int total=0;
-       for (int row = 0; row < model->rowCount(); ++row) {
-        total+=model->data(model->index(row, 1)).toInt();
-       }
+    series->append(a,Pour1);
+    series->append(b,Pour2);
+    series->append(c,Pour3);
+if (Pour1!=0)
+{QPieSlice *slice = series->slices().at(0);
+slice->setLabelVisible();
+slice->setPen(QPen());}
 
-    for (int row = 0; row < model->rowCount(); ++row) {
-        QString matiere = model->data(model->index(row, 0)).toString();
-        int count = model->data(model->index(row, 1)).toInt();
-
-        QString label = QString("%1 . %2%").arg(matiere).arg(QString::number((count * 100) / total, 'f', 2));
-        series->append(label, count);
-    }
-
+if ( Pour2!=0)
+{
+     // Add label, explode and define brush for 2nd slice
+     QPieSlice *slice1 = series->slices().at(1);
+     //slice1->setExploded();
+     slice1->setLabelVisible();
+}
+if(Pour3!=0)
+{
+     // Add labels to rest of slices
+     QPieSlice *slice2 = series->slices().at(2);
+     //slice1->setExploded();
+     slice2->setLabelVisible();
+}
+    // Create the chart widget
     QChart *chart = new QChart();
+    // Add data to chart with title and hide legend
     chart->addSeries(series);
-    chart->setTitle("Statistiques par matière");
+    chart->setTitle("Pourcentage de nombre de classes attribuées a chaque enseignant avec n= "+ QString::number(total));
     chart->legend()->hide();
-
+    // Used to display the chart
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(1000, 500);
+    chartView->resize(1000,500);
     chartView->show();
-
-
+    son4->play();
 }
 
 void garderiew::on_pb_supprimer_enseignant_clicked()
