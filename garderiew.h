@@ -126,6 +126,8 @@ private slots:
 
     void on_pb_modifie_enseignant_clicked();
 
+
+
 private:
     Ui::garderiew *ui;
 

@@ -723,3 +723,4 @@ void garderiew::on_pb_modifie_enseignant_clicked()
     }
    //  ui->tab_enseignant->setModel(EN1.afficher());
 }
+
